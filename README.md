@@ -1,6 +1,3 @@
-# ParkOn_dev
+# ParkOn__dev_private
 
-
-Установка всех модулей:
-
-npm install
+Уходите.Вам тут не рады (   -__-)
