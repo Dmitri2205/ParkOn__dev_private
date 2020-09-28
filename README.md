@@ -1,1 +1,6 @@
-# ParkOn__dev_private
+# ParkOn_dev
+
+
+Установка всех модулей:
+
+npm install
