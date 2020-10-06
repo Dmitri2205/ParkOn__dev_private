@@ -1,94 +1,67 @@
-import React from "react";
+import React,{ useState,useEffect } from "react";
 import ReactDOM from "react-dom";
 import validationFaild from "../img/validationFaild.png";
 import validationSuccess from "../img/validationSuccess.png";
 import AuthService from '../Services/AuthService';
 
 
-export default class LoginPhone extends React.Component {
-
-	state={
-    input:' ',
-    validate:false,
-    passwordInput:' ',
-    authorised:" ",
-    isPassOk:' ',
-  };
-
+export default function LoginPhone(props){
+const [input,setInput] = useState(' ');
+const [validate,setValidate] = useState(false);
+const [passwordInput,setPasswordInput] = useState(' ');
+const [authorized,setAuthorized] = useState(' ');
+const [isPassOk,setPassOk] = useState(' ');
  
 
+
+
+useEffect(()=>{
+  input.length > 10 ? validateFunction() : false;
+})
 //---------------------Обработчик ввода-------------------------------------//
 
-inputHandler=()=>{
+let inputHandler=()=>{
 const string = event.target.value;
 console.log(string);
-this.setState({original:Number(event.target.value)})
-
 //-------------Маска подстановки символов в поле телефона------------------//
-
-
 const newString = string.replace( /(^8|7)(\d{3})(\d{3})(\d{2})(\d{2})/g, '+7(' + string[1]+string[2]+string[3] + ")" + string[4]+string[5]+string[6]+'-'+string[7]+string[8]+'-'+string[9]+string[10]  );
-console.log(newString);
-
-//--Отрабатывает по группам захвата.Пробелы между ними сломают регулярку--//
-
 event.target.value = newString;
-
-this.setState( { input:event.target.value });
   setTimeout(()=>{
-  this.handleValues();       //Вызов обработчика значений ввода
+  handleValues();       //Вызов обработчика значений ввода
   },50);
+setInput(event.target.value);
 };
 
 
 
 
-handleValues = () => { //Обработчик введён ного значения телефона
-  
-  const { input } = this.state;
-    this.forceUpdate();
- if (input.length > 11) {
-  this.validateFunction(); // Вызов функции валидации
+let handleValues = () => { //Обработчик введённого значения телефона
+  if (input.length > 11) {
+    validateFunction(); // Вызов функции валидации
   return(null); // Когда номер введён,перестаём изменять state при последующем вводе    
   };
 };
 
 
-validateFunction=()=>{   //Функция валидации
-  
+let validateFunction=()=>{   //Функция валидации
   //-----------Регулярное выражение для валидации-----------------//
-
   const regular = /\+[7]{1}[\(]{1}\d{3}[\)]{1}\d{3}[-]{1}\d{2}[-]{1}\d{2}/g;
-  const result = regular.exec(this.state.input); //Вернёт массив с результатом либо null 
+  const result = regular.exec(input); //Вернёт массив с результатом либо null 
   console.log(result);
     if(result !== null){
-      this.setState({validate:true})
+      setValidate(true)
     }else{
-      this.setState({validate:false})
-
-  }
+      setValidate(false);
+  };
 };
-
-
-//----------Проверка пароля------------------//
-
-validatePassword = (value) => {
-  let isPassOk = false;
-
-  if (value) {
-    isPassOk = value.toString().trim().length > 3 ? true : false;
-  }
-  this.setState({isPassOk});
-}
 
 //------------------------Функция кнопки------------------------//
 
-validationButtonHandler = (e) => { 
-  const {input, passwordInput, validate, isPassOk,original} = this.state;//Объявляем значения из state
+let validationButtonHandler = (e) => { 
     
   if (input.length > 15 && validate && isPassOk) {
     Promise.resolve( AuthService.makeLogin({ email:original, password: passwordInput.toString() }))
-    .then( () => this.props.passedState(this.state.isPassOk));
+    .then( () => props.passedState(isPassOk));
   } else if (!isPassOk) {
     alert("Вы ввели некорректный код");
   } else if (validate !== true || input.length < 15) {
@@ -114,20 +87,26 @@ fetch(`http:\//localhost:3000/?phone=${input}&password=${passwordInput}`,{mode:'
 
 //--------------Обработчик ввода поля пароля---------------//
 
-passwordHandler = (value) => {
+let passwordHandler = (value) => {
 setTimeout(()=>{
-this.setState({passwordInput:Number(value) }); //Конвертируем строку ввода пароля в номер для сравнения с генерируемым кодом 
-this.validatePassword(value);
+setPasswordInput(Number(value)); //Конвертируем строку ввода пароля в номер для сравнения с генерируемым кодом 
+validatePassword(value);
 },50);
+};
+//----------Проверка пароля------------------//
+
+let validatePassword = (value) => {
+  let isPassOk = false;
+
+  if (value) {
+    isPassOk = value.toString().trim().length > 3 ? true : false;
+  }
+  setPassOk(true);
 }
-
-
-render(){
-const {codeSended,passwordInput,input,validate,isPassOk} = this.state;
 	return (
 
     <div className="verificationMethodScreen" 
-          style={this.props.auth === "Phone" ? {display:'block'}:{display:'none'}}>
+          style={props.auth === "Phone" ? {display:'block'}:{display:'none'}}>
 		<div className="loginScreen">
 
       <div className="registration">
@@ -142,14 +121,14 @@ const {codeSended,passwordInput,input,validate,isPassOk} = this.state;
       <p>Номер телефона</p>
           <div className="inputRowComponent">
           
-            <input onChange={this.inputHandler} 
+            <input onChange={inputHandler} 
                    className="validationInputField"
                    placeholder="+7(___)___-__-__"
                    maxLength="16"
                    
             />
 
-<p className="validationErrorText" style={validate === false ? {display:'block'}:{display:'none'}
+            <p className="validationErrorText" style={validate === false ? {display:'block'}:{display:'none'}
                  }>Номер введён неправильно.<a href="/PhoneValidation">Попробуйте ещё раз</a></p>
              
               <img className="validationInputFieldIndication"src={validationSuccess}
@@ -158,43 +137,32 @@ const {codeSended,passwordInput,input,validate,isPassOk} = this.state;
               <img className="validationInputFieldIndication"src={validationFaild}
               style={input.length > 3 && validate !== true ? {display:'block'}:{display:'none'} }
                 />
-
-
-          
-        </div>
-        
+          </div>
         <div className="codeField">
          
           <p>Введите код</p> 
             <div className="inputRowComponent"> 
-          <input 
-              className="validationInputField" 
-              placeholder="• • • • •" 
-              onChange={ ()=>{this.passwordHandler(event.target.value)}}
-              maxLength="5"/>
-   <img className="validationInputFieldIndication"src={validationSuccess}
-                style={isPassOk ? {display:'block'}:{display:'none'} }
-            />
-     
-          <img className="validationInputFieldIndication"src={validationFaild}
-            style={isPassOk ? {display:'block'}:{display:'none'} }
+            <input className="validationInputField" 
+                   placeholder="• • • • •" 
+                   onChange={ ()=>{passwordHandler(event.target.value)}}
+                   maxLength="5"/>
+              <img className="validationInputFieldIndication"src={validationSuccess}
+                   style={isPassOk ? {display:'block'}:{display:'none'} }
+              />
+              <img className="validationInputFieldIndication"src={validationFaild}
+                   style={isPassOk ? {display:'block'}:{display:'none'} }
             />  
-            
-            <p className="validationErrorText" style={ codeSended === true && passwordInput !== generatedCode  ? {display:'block'} : {display:'none'} }>Мне не пришёл код.<a href="#">Отправить повторно</a></p>        
-    
           </div>
       </div>
     </div>
-
          <button className="passwordSendButton" style={isPassOk  ? { opacity:1} : {opacity:0.5}
                                                            }
-                onClick={ ()=>{this.validationButtonHandler(event)}}
+                onClick={ ()=>{validationButtonHandler(event)}}
         > 
              <p>Войти</p>
          </button>
          </div>
       </div>
-</div>
-		);
-  }
+    </div>
+  );
 }

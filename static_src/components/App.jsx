@@ -80,17 +80,16 @@ trainingSwitch = (value) => {
 		// console.log(license);
 		const { currentScreen } = this.state;
 		const switchingFunction = () => {
-				if (currentScreen === 'mainScreen') {
+				if (currentScreen === 'mainScreen' && localStorage.getItem('lastScreen') === ' ') {
 				setTimeout( ()=>{
-					this.setState({currentScreen:'mapModule'});
-					sessionStorage.setItem('lastScreen','mapModule');
+					this.setState({currentScreen:'welcome'});
+					sessionStorage.setItem('lastScreen','welcome');
 					},3500);
 					const element = <MainScreen />; 
 					return (element);
 
 				}else if (currentScreen === 'welcome') {
-					const element = <Welcome elf={this.emergencyLinksFunc}
-											 authTypeSwitch={this.authTypeSwitch}
+					const element = <Welcome authTypeSwitch={this.authTypeSwitch}
 					/>;	
 					sessionStorage.setItem('lastScreen','welcome');
 

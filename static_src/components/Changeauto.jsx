@@ -1,92 +1,61 @@
-import React from 'react';
+import React,{ useState,useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PhoneValidation from './AuthRegComponents/PhoneValidation';
 import EmailValidation from './AuthRegComponents/EmailValidation';
 
 
 
-export default class Changeauto extends React.Component {
+export default function Changeauto (props){
 
-state={
-	authType:' ', //От этого параметра зависит отрисовка экрана авт.\рег.
-	passed:false,
-};
+const [authType,setAuthType] = useState(' ');
+const [passed,setPassed] = useState(false);
 
-
-
-componentDidUpdate(){
-	console.log(this.state.passed);
-		if (this.state.passed) {
-	setTimeout(()=>{
-		this.props.passedVerification(this.state.passed);
-	},500)
-};
-}
-
-
-handleAuth = (string) => {
-	const r = string; 
-		if (r === "Phone") {
-			this.setState({ authType:r});
-		}else{
-			 this.setState({authType:r});
+useEffect(()=>{
+	console.log(passed);
+		if (passed) {
+			setTimeout(()=>{
+				props.passedVerification(passed);
+			},500);
 		}
-};
-
-
-passedState=(value)=>{
+});
+var passedState=(value)=>{
 	if (value) {
-this.setState({passed:true})
+		setPassed(value);
 	};
 };
-
-
-
-handleAuth = (value)=> {
+var handleAuth = (value)=> {
 	if (value === "Phone") {
-		this.setState({authType:value})
+		setAuthType(value)
 	}else{
-		this.setState({authType:value})
+		setAuthType(value)
 	};
-}
-
-render(){
-	const {currentScreen} = this.props;
+};
 	return (
-
-
 		<div className="verificationMethodScreen"> 
 		
 
-		<div className="welcomeScreen__auth" 
-			 style={currentScreen === "changeAuto" && this.state.authType === " "  ? {display:'block'} : {display:'none'} }>
-		<div className="BackToWelcome"><span onClick={this.props.backFunction}></span></div>
-		<p>
-			Выберите удобный 
-				<br/>
-			способ авторизации
-		</p>
-			    <div className="loginLinksRow">
-				 	    
-
-				 	    <button className="loginLink" onClick={()=>{this.handleAuth("Phone")}}>
-				  			  Номер телефона
-				  		</button>
-				
-						
-				 	    <button className="loginLink" onClick={()=>{this.handleAuth("Mail")}}>
-							  Электронная почта 
-				  		</button>
-						
-				</div>
-			  </div>
-			  <EmailValidation auth={this.state.authType}
-							  passedState={this.passedState}/>
-
-			  <PhoneValidation auth={this.state.authType}
-			 				   passedState={this.passedState}
-			  />
-			 </div>
+			<div className="welcomeScreen__auth" 
+				 style={props.currentScreen === "changeAuto" && authType === " "  ? {display:'block'} : {display:'none'} }>
+			<div className="BackToWelcome"><span onClick={props.backFunction}></span></div>
+				<p>
+					Выберите удобный 
+						<br/>
+					способ авторизации
+				</p>
+				    <div className="loginLinksRow">
+					 	    <button className="loginLink" onClick={()=>{handleAuth("Phone")}}>
+					  			  Номер телефона
+					  		</button>
+					 	    <button className="loginLink" onClick={()=>{handleAuth("Mail")}}>
+								  Электронная почта 
+					  		</button>
+					</div>
+			</div>
+			<EmailValidation auth={authType}
+							  passedState={passed}/>
+			<PhoneValidation auth={authType}
+							   passedState={passed}
+			/>
+		</div>
 	);
   }
-}

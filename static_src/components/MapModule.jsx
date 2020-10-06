@@ -122,13 +122,22 @@ export default class MapModule extends Component{
     };
 
     personalShow = ()=>{
+
+        this.modal.current.style.animation = "apearence .7s ease";
+        setTimeout(()=>{
+            this.modal.current.animation = 'unset';
+        },3000)
         const {personalShown} = this.state;
         if (personalShown) {
             this.setState({personalShown:false});
         }else{
             this.setState({personalShown:true});
         }
+    };
+    placesShow = () =>{
+        this.modal.current.style.animation  = 'modalShw 1s ease'; 
     }
+
     render() {
         const { coordinates } = this.props;
         const { mapData, showRoute, personalShown } = this.state;
@@ -188,11 +197,11 @@ export default class MapModule extends Component{
                         <ZoomControl options={{float: 'right', size: "small",layout:'round#zoomLayout', position: {right: 12, bottom: 250}}}/>
                     </Map>
                 </YMaps>
-                  <div className="placesCount"
+                <div className="placesCount"
                         ref={this.modal}
                   >
                         <p>Свободных мест:5</p>
-                    </div>
+                </div>
                 </div>
                
                <div className="loader"
