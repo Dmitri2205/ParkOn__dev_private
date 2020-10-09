@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect } from "react";
 import ReactDOM from 'react-dom';
 import about_icon from "../img/about_icon.png";
 import learn_icon from "../img/learn_icon.png";
@@ -14,45 +14,40 @@ import Croudfinding from "./Croudfinding";
 
 
 
-export default class Personal extends React.Component {
+export default function Personal(props){
 
-        state={
-            currentMenuScreen:" ",
-        };
+const [currentMenuScreen,setCurrentMenuScreen] = useState(' ');
 
-    
-
-    
-
-personalSwitch=(s)=>{
-    if (s === "personalRoom") {
-        this.setState({currentMenuScreen:s});
-    }else if (s === "about") {
-        this.setState({currentMenuScreen:s});
-     }else if (s === "croudfinding") {
-        this.setState({currentMenuScreen:s});
-    }else if (s === "letsTraining") {
-        this.setState({currentMenuScreen:s});
-        
-    }else if (s === "feedback") {
-        this.setState({currentMenuScreen:s});
-    }else if (s === "back") {
-        this.setState({currentMenuScreen:' '});
-    };
-}
-
-    render(){
-    const {currentMenuScreen} = this.state;
-    const {visibility,personalShow} = this.props;
-        return (
-
+var personalSwitch=(s)=>{
+    switch (s) {
+        case "personalRoom":
+            setCurrentMenuScreen(s);
+            break;
+        case "about":
+            setCurrentMenuScreen(s);
+            break;
+        case "letsTraining":
+            setCurrentMenuScreen(s);
+            break;
+        case "feedback":
+            setCurrentMenuScreen(s);
+            break;
+        case "croudfinding":
+            setCurrentMenuScreen(s);
+            break;
+        case "back":
+            setCurrentMenuScreen(s);
+            break;
+    }
+};
+return (
             <div className="verificationMethodScreen">
-        <div className="personal" style={currentMenuScreen && visibility ? {right:'0'} : {display:'none',right:'-100%'}}>
+        <div className="personal" style={currentMenuScreen && props.visibility ? {right:'0'} : {display:'none',right:'-100%'}}>
             <div className="personal_top">
                 <div className="personal_header">
                 
                       <p>Меню</p>
-                  <span className="close" onClick={ ()=>{personalShow()} } />   
+                  <span className="close" onClick={ ()=>{props.personalShow()} } />   
                 </div>  
             </div>
             
@@ -62,33 +57,33 @@ personalSwitch=(s)=>{
             <div className="linkpersonal">
           <div className="linkList">
                     
-                    <span onClick={()=>{this.personalSwitch("personalRoom")} } className="personal_link">
-                    <img className="personal_icons" src={private_personal}/>
+                    <span onClick={()=>{personalSwitch("personalRoom")} } className="personal_link">
+                    <img className="personal_icons" src={private_personal} alt="personal"/>
                             <p>Личный кабинет</p>                    
                     </span>
 
-                    <span onClick={()=>{this.personalSwitch("about")} } className="personal_link">
-                    <img className="personal_icons" src={about_icon}/>
+                    <span onClick={()=>{personalSwitch("about")} } className="personal_link">
+                    <img className="personal_icons" src={about_icon} alt="about"/>
                             <p>О приложении</p>   
                                 
                     </span>
 
-                    <span onClick={()=>{this.personalSwitch("letsTraining")} } className="personal_link">    
-                    <img className="personal_icons" src={learn_icon}/>
+                    <span onClick={()=>{personalSwitch("letsTraining")} } className="personal_link">    
+                    <img className="personal_icons" src={learn_icon} alt="learn"/>
                              <p> Обучение</p>
                               
                     </span>          
         
                         
                         
-                    <span onClick={()=>{this.personalSwitch("feedback")} } className="personal_link bottom">
-                    <img className="personal_icons" src={sup_icon}/>
+                    <span onClick={()=>{personalSwitch("feedback")} } className="personal_link">
+                    <img className="personal_icons" src={sup_icon} alt="support"/>
                               <p>   Обратная связь</p>
                               
                     </span>
 
-                    <span onClick={()=>{this.personalSwitch("croudfinding")} } className="personal_link bottom">
-                    <img className="personal_icons" src={ruble}/>
+                    <span onClick={()=>{personalSwitch("croudfinding")} } className="personal_link">
+                    <img className="personal_icons" src={ruble} alt="ruble"/>
                               <p>Краудфайндинг</p>
                               
                     </span>
@@ -97,24 +92,23 @@ personalSwitch=(s)=>{
             </div>
         </div>
         <Personalroom cMS={currentMenuScreen}
-                       back={this.personalSwitch} 
+                       back={personalSwitch} 
         />
         <About cMS={currentMenuScreen}
-               back={this.personalSwitch}
+               back={personalSwitch}
         />
     
         <Letstraining cMS={currentMenuScreen}
-                      back={this.personalSwitch}
+                      back={personalSwitch}
         />
 
         <Feedback cMS={currentMenuScreen}
-                      back={this.personalSwitch}
+                      back={personalSwitch}
         />        
         <Croudfinding cMS={currentMenuScreen}
-                      back={this.personalSwitch}
+                      back={personalSwitch}
         />
 
         </div>
         );
     }
- }

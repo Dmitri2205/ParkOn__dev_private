@@ -11,7 +11,7 @@ const [validate,setValidate] = useState(false);
 const [passwordInput,setPasswordInput] = useState(' ');
 const [authorized,setAuthorized] = useState(' ');
 const [isPassOk,setPassOk] = useState(' ');
- 
+const [original,setOriginal] = useState(' ');
 
 
 
@@ -23,6 +23,7 @@ useEffect(()=>{
 let inputHandler=()=>{
 const string = event.target.value;
 console.log(string);
+setOriginal(string);
 //-------------Маска подстановки символов в поле телефона------------------//
 const newString = string.replace( /(^8|7)(\d{3})(\d{3})(\d{2})(\d{2})/g, '+7(' + string[1]+string[2]+string[3] + ")" + string[4]+string[5]+string[6]+'-'+string[7]+string[8]+'-'+string[9]+string[10]  );
 event.target.value = newString;
@@ -46,7 +47,7 @@ let handleValues = () => { //Обработчик введённого знач�
 let validateFunction=()=>{   //Функция валидации
   //-----------Регулярное выражение для валидации-----------------//
   const regular = /\+[7]{1}[\(]{1}\d{3}[\)]{1}\d{3}[-]{1}\d{2}[-]{1}\d{2}/g;
-  const result = regular.exec(input); //Вернёт массив с результатом либо null 
+  const result = regular.exec(original); //Вернёт массив с результатом либо null 
   console.log(result);
     if(result !== null){
       setValidate(true)

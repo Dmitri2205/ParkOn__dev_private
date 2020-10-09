@@ -32,8 +32,6 @@ var handleAuth = (value)=> {
 };
 	return (
 		<div className="verificationMethodScreen"> 
-		
-
 			<div className="welcomeScreen__auth" 
 				 style={props.currentScreen === "changeAuto" && authType === " "  ? {display:'block'} : {display:'none'} }>
 			<div className="BackToWelcome"><span onClick={props.backFunction}></span></div>

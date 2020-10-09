@@ -16,7 +16,7 @@ export default function Karma(){
 		response = response;
 	})
 	.catch((err)=>{
-		console.log(err);
+		console.log('Karma' + " " + err);
 	});
 	return response;
 }

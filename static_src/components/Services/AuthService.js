@@ -25,7 +25,7 @@ export default class AuthService {
         exp: _parseTokenData(response.data.token).exp
       });
     } catch (error) {
-      throw new Error(error);
+        alert('Упс...Что-то пошло не так' + ':' + error);
     }
   };
 

@@ -122,11 +122,6 @@ export default class MapModule extends Component{
     };
 
     personalShow = ()=>{
-
-        this.modal.current.style.animation = "apearence .7s ease";
-        setTimeout(()=>{
-            this.modal.current.animation = 'unset';
-        },3000)
         const {personalShown} = this.state;
         if (personalShown) {
             this.setState({personalShown:false});
@@ -135,7 +130,10 @@ export default class MapModule extends Component{
         }
     };
     placesShow = () =>{
-        this.modal.current.style.animation  = 'modalShw 1s ease'; 
+        this.modal.current.style.animation  = 'modalShow 3.5s ease';
+        setTimeout(()=>{
+        this.modal.current.style.animation  = 'unset';
+        },3500); 
     }
 
     render() {
@@ -197,13 +195,10 @@ export default class MapModule extends Component{
                         <ZoomControl options={{float: 'right', size: "small",layout:'round#zoomLayout', position: {right: 12, bottom: 250}}}/>
                     </Map>
                 </YMaps>
-                <div className="placesCount"
-                        ref={this.modal}
-                  >
+                <div className="placesCount" ref={this.modal}>
                         <p>Свободных мест:5</p>
                 </div>
                 </div>
-               
                <div className="loader"
                     style={{ display:'block',
                             width: '100%',
@@ -212,21 +207,16 @@ export default class MapModule extends Component{
                             position: 'absolute',
                             top: '25%',
                             zIndex:' -9999',}}
-               >
+                >
                    <h1 >Загрузка...</h1>
-                   <img src="static/build/loader.gif"/>
+                   <img src="static/build/loader.gif" alt="loader"/>
                 </div>
-                
-                
                 <TouchBar homeRouteButton={this.homeRouteButton}
                           personalShow={this.personalShow}
                 />
-                
-                    <Personal visibility={personalShown}
+                <Personal visibility={personalShown}
                               personalShow={this.personalShow}
-                    />
-            
-    
+                />
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=b2ee8f08-a037-4bb4-be59-dc5ed72ce461" type="text/javascript">
         </script>
                 </div>    

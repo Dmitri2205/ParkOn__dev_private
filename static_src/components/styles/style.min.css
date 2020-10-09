@@ -1,7 +1,8 @@
 body{padding:0;margin:0;width:100vw;height:100vh;font-family:Nunito,sans-serif}
 .App{display:block;width:100%;height:100%;position:absolute;z-index:1;top:0;left:0;background-color:#fff}
 #root{display:block;width:100%;height:100%}
-.mainScreen{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;width:100%;height:100%;z-index:1;background:url(/static/build/backgroundMain.png);background-position:center;background-size:cover;background-repeat:no-repeat;-webkit-animation:mainscreen .5s ease-in;animation:mainscreen .5s ease-in}
+.mainScreen{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;width:100%;height:100%;z-index:1;-webkit-animation:mainscreen .5s ease-in;animation:mainscreen .5s ease-in}
+.mainScreen img{display:block;position:absolute;z-index:-9999;width:100%;height:100%}
 .mainScreen .logo{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;width:100%;height:45px;font-size:26px;-webkit-animation-duration:1s;animation-duration:1s;margin:auto auto;-webkit-animation-name:logo;animation-name:logo}
 .mainScreen .logo p{margin:0 3px 0 0;font-weight:700;line-height:45px}
 .mainScreen .logo .switch{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;width:90px;height:48px;position:relative;line-height:48px;background-color:#44f1a6;border-radius:50px;text-align:left;-webkit-animation:switchBackground 2s ease-in-out;animation:switchBackground 2s ease-in-out}
@@ -219,17 +220,14 @@ to{display:block;opacity:1}
 @media screen and (min-width:375px){
 .personal_header p{left:41%;margin:0}
 }
-.personal_link{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;width:100%;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;height:20px;line-height:35px;color:#fff}
+.personal_link{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;width:100%;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;height:30px;line-height:28px;color:#fff}
 .personal_link p{margin:0;font-size:18px}
 .personal_link a{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-decoration:none;color:#fff;font-weight:700}
 @media screen and (min-width:375px){
 .personal_link a{font-size:32px;font-style:normal;font-weight:300;font-size:22px;line-height:20px;letter-spacing:.1px}
 .personal_link a:hover{color:#44f1a6}
 }
-.personal_link img{margin-right:26px}
-@media screen and (min-width:375px){
-.personal_link img{width:30px;height:30px}
-}
+.personal_icons{width:25px;height:25px;margin-right:20px}
 .personal .HomeAdressModal{width:100%;height:137px;background:-webkit-gradient(linear,left top,left bottom,from(#2fe89a),to(#2b3569));background:linear-gradient(180deg,#2fe89a 0,#2b3569 100%);border:1px solid #000;border-radius:10px;margin:0 auto;position:absolute;top:40%;left:0;text-align:center;color:#fff;-webkit-transition:1s;transition:1s;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}
 @-webkit-keyframes HomeAdressModal{
 0%{-webkit-transform:scale(0);transform:scale(0)}
@@ -275,13 +273,13 @@ to{display:block;opacity:1}
 @media screen and (min-width:375px){
 .About .aboutTextWraper{padding-top:130px;font-size:18px}
 }
-.About .aboutTextWraper .aboutText{display:block;width:90%;margin:0 auto;padding-top:74px;color:#fff;font-size:16px;font-weight:200}
+.About .aboutTextWraper .aboutText{display:block;width:90%;margin:0 auto;padding-top:74px;color:#fff;font-size:16px;line-height:150%;font-weight:200}
 .map{position:absolute;top:0;left:0;display:block;width:100vw;height:100%}
 .MapWraper{display:block;width:100%;height:100%;overflow:hidden}
 .MapWraper .ymaps-2-1-77-gotoymaps__container{display:none}
 .MapWraper .ymaps-2-1-77-gototech{display:none}
 .MapWraper .ymaps-2-1-77-copyright__content{display:none}
-.MapWraper .placesCount{position:absolute;top:-10vh;z-index:9999;width:90%;height:10vh;background:linear-gradient(244deg,#2fe89a,#2b3569);text-align:center;border-radius:10px;-webkit-transition:top 1s;transition:top 1s;color:#bae4fc}
+.MapWraper .placesCount{position:absolute;top:-10vh;right:5%;z-index:9999;width:90%;height:8vh;background:linear-gradient(244deg,#2fe89a,#2b3569);text-align:center;border-radius:10px;-webkit-transition:top 1s;transition:top 1s;color:#bae4fc}
 @-webkit-keyframes apearence{
 0%{top:-10vh;margin:10px 5%}
 20%{top:0}
@@ -319,6 +317,26 @@ to{display:block;opacity:1}
 .Croudfinding__scale p{text-align:center;width:100%;position:relative;top:0;left:0;z-index:2;font-size:22px;color:#fff}
 .Croudfinding__scale span{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;width:5px;height:100%;position:absolute;top:0;left:0;background-color:#2fe89a;z-index:1}
 .Croudfinding .summ__count{width:90%;text-align:center;color:#fff;margin:10px auto}
+@-webkit-keyframes loader{
+0%{-webkit-transform:rotateX(0);transform:rotateX(0)}
+100%{-webkit-transform:rotateX(360deg);transform:rotateX(360deg)}
+}
+@keyframes loader{
+0%{-webkit-transform:rotateX(0);transform:rotateX(0)}
+100%{-webkit-transform:rotateX(360deg);transform:rotateX(360deg)}
+}
+@-webkit-keyframes modalShow{
+0%{top:-10vh}
+25%{margin-top:2vh;top:0}
+75%{margin-top:2vh;top:0}
+100%{top:-10vh}
+}
+@keyframes modalShow{
+0%{top:-10vh}
+25%{margin-top:2vh;top:0}
+75%{margin-top:2vh;top:0}
+100%{top:-10vh}
+}
 @-webkit-keyframes personal__screens{
 0%{display:none;right:-100vw}
 100%{right:0;display:block}

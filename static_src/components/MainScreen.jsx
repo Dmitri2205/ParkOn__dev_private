@@ -2,34 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import axios from "axios";
+import bg from "../../static/build/backgroundMain.png";
 
-export default class MainScreen extends React.Component{
+export default function MainScreen(props){
 
-
-state={
-
-};
-
-
-
-
-
-
-dataFetch = () => {
+var dataFetch = () => {
 let path = "";
 		if (!AuthService.isAccesTokenExpired()) {
 			path ='/MapModule';
 		}
 		this.loaddingRedirect(path);	
-}
-
-
-
-render(){
-	//Data
+};
 	return (
 		
 			<div className='mainScreen' >
+			<img src={bg} alt="Background"/>
 				<div className="logo">
 						<p>Park</p>
 				<div className="switch">
@@ -41,4 +28,3 @@ render(){
 			</div>
 	);
   }
-}

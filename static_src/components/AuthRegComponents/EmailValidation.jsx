@@ -1,99 +1,71 @@
-import React from "react";
+import React,{ useState,useEffect } from "react";
 import ReactDOM from "react-dom";
 import validationFaild from "../img/validationFaild.png";
 import validationSuccess from "../img/validationSuccess.png";
 import AuthService from '../Services/AuthService';
 
-export default class LoginEmail extends React.Component {
+export default function LoginEmail(props){
+const [input,setInput] = useState(' ');
+const [passwordInput,setPasswordInput] = useState(' ');
+const [validate,setValidate] = useState(false);
+const [mailNotExist,setMailNotExist] = useState(' ');
+const [mailUsed,setMailUsed] = useState(' ');
+const [mailString,setMailString] = useState(' ');
+const [codeSended,setCodeSended] = useState(' ');
+const [apiUrl,setApiUrl] = useState(' ');
+const [isPassOk,setPassOk] = useState(' ');
 
-	state={
-		input:' ',
-		validate:false,
-		mailNotExist:' ',
-		mailUsed:' ',
-		codeSended:' ',
-		apiUrl:' ',
-		passwordInput:' ',
-		isPassOk:false,
-	};
-
-
-
-
-
-inputHandler = (event) =>{
-setTimeout(()=>{
-this.setState({input: event.target.value});
-	this.validateFunction();
-	this.handleValues(event);
-	},100);
+useEffect(()=>{
+  handleValues(event);
+  validatePassword(passwordInput);
+});
+var inputHandler = (event) =>{
+    setInput(event.target.value);
+	validateFunction();
 };
-
-handleValues = () => {
-  this.forceUpdate();
-  if (this.state.input.length > 11) {
-    this.setState({input:this.state.input})
+var handleValues = () => {
+  if (input.length > 11) {
+    setInput(input)
   }else{
-
-  setTimeout( () => {
-      this.setState({mailString:true});
-  },100)
+    setMailString(true);
   }
 };
-
-validateFunction=()=>{
+var validateFunction=()=>{
   const regular = /\w+\@{1}\w+\.[a-z]{2,3}$/g;
-  const result = regular.exec(this.state.input);
-  console.log(result);
+  const result = regular.exec(input);
   if(result !== null){
-  this.setState({validate:true})
+  	setValidate(true)
   }else{
-  this.setState({validate:false})
+	setValidate(false)
   }
 };
+var passwordHandler = (value) => {
+	setTimeout(()=>{
+		setPasswordInput(Number(value));
 
-
-validatePassword = (value) => {
+	},50);
+};
+var validatePassword = (value) => {
   let isPassOk = false;
-
   if (value) {
-    isPassOk = value.toString().trim().length > 3 ? true : false;
+  	let pass = value.toString();
+    isPassOk = pass.length == 5 ? true : false;
   }
-
-  this.setState({isPassOk})
-}
-
- 
-  validationButtonHandler = () => {
-		const {input, passwordInput, validate, isPassOk} = this.state;
-		
-  	if (input.length > 5 && validate && isPassOk) {
+  setPassOk(isPassOk)
+};//отрабатывает 2 раза
+var validationButtonHandler = () => {
+  	if (input.length >= 5 && validate && isPassOk) {
 			Promise.resolve( AuthService.makeLogin({ email: input, password: passwordInput.toString() }))
-			.then((response) => this.props.passedState(this.state.isPassOk)) 
+			.then((response) => props.passedState(isPassOk)); 
 		} else if (!isPassOk) {
 			alert("Вы ввели некорректный код");
 		}	else {
   		alert("Проверьте поля ввода и повторите попытку.");
   	}
-  };
-
-
-
-
-passwordHandler = (value) => {
-setTimeout(()=>{
-this.setState({passwordInput:Number(value) });
-this.validatePassword(value);
-},200);
 };
-
-
-
-render(){
-	const {mailUsed,codeSended,mailNotExist,passwordInput,input,validate,isPassOk} = this.state;
 	return (
 <div className="verificationMethodScreen"
-	 style={this.props.auth === "Mail" ? {display:'block'}:{display:'none'}}>
+	 style={props.auth === "Mail" ? {display:'block'}:{display:'none'}}>
 <div className="loginScreen">
 	
 	 <div className="registration">
@@ -107,7 +79,7 @@ render(){
 			<p>Введите адрес эл.почты</p>
 			<div className="inputRowComponent">
 			
-				<input onChange={()=> {this.inputHandler(event)}} 
+				<input onChange={()=> {inputHandler(event)}} 
 						className="validationInputField"
 						placeholder="ivanov.ivan@mail.ru"
 
@@ -135,9 +107,14 @@ render(){
 					<input 
 						className="validationInputField" placeholder="• • • • •"
 						maxLength="5"
-						onChange={ ()=>{this.passwordHandler(event.target.value)}}
+						onChange={ ()=>{passwordHandler(event.target.value)}}
 					/>
-			
+					 <img className="validationInputFieldIndication"src={validationSuccess}
+			              style={isPassOk && passwordInput ? {display:'block'}:{display:'none'} }
+		            />
+		            <img className="validationInputFieldIndication"src={validationFaild}
+			             style={(passwordInput.toString()).length < 5 && !isPassOk ? {display:'block'}:{display:'none'} }
+		            />  	
 						
 							
 		
@@ -147,7 +124,7 @@ render(){
 
 				<button className="passwordSendButton" 
 						style={validate !== true || mailUsed === true || mailNotExist === true ? {opacity:0.5} : { opacity:1}}		
-						onClick={ ()=>{this.validationButtonHandler(event)}}> 
+						onClick={ ()=>{validationButtonHandler(event)}}> 
 
 					<p>Войти</p>
 				 
@@ -157,4 +134,3 @@ render(){
 	</div>
 	);
   }
-}

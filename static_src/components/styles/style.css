@@ -33,12 +33,15 @@ body {
   width: 100%;
   height: 100%;
   z-index: 1;
-  background: url(/static/build/backgroundMain.png);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
   -webkit-animation: mainscreen 500ms ease-in;
           animation: mainscreen 500ms ease-in;
+}
+.mainScreen img {
+  display: block;
+  position: absolute;
+  z-index: -9999;
+  width: 100%;
+  height: 100%;
 }
 .mainScreen .logo {
   display: -webkit-box;
@@ -1168,8 +1171,8 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  height: 20px;
-  line-height: 35px;
+  height: 30px;
+  line-height: 28px;
   color: white;
 }
 .personal_link p {
@@ -1205,14 +1208,10 @@ body {
     color: #44f1a6;
   }
 }
-.personal_link img {
-  margin-right: 26px;
-}
-@media screen and (min-width: 375px) {
-  .personal_link img {
-    width: 30px;
-    height: 30px;
-  }
+.personal_icons {
+  width: 25px;
+  height: 25px;
+  margin-right: 20px;
 }
 .personal .HomeAdressModal {
   width: 100%;
@@ -1442,6 +1441,7 @@ body {
   padding-top: 74px;
   color: white;
   font-size: 16px;
+  line-height: 150%;
   font-weight: 200;
 }
 .map {
@@ -1470,9 +1470,10 @@ body {
 .MapWraper .placesCount {
   position: absolute;
   top: -10vh;
+  right: 5%;
   z-index: 9999;
   width: 90%;
-  height: 10vh;
+  height: 8vh;
   background: linear-gradient(244deg, #2fe89a, #2b3569);
   text-align: center;
   border-radius: 10px;
@@ -1699,6 +1700,58 @@ body {
   text-align: center;
   color: white;
   margin: 10px auto;
+}
+@-webkit-keyframes loader {
+  0% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+  }
+  100% {
+    -webkit-transform: rotateX(360deg);
+            transform: rotateX(360deg);
+  }
+}
+@keyframes loader {
+  0% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+  }
+  100% {
+    -webkit-transform: rotateX(360deg);
+            transform: rotateX(360deg);
+  }
+}
+@-webkit-keyframes modalShow {
+  0% {
+    top: -10vh;
+  }
+  25% {
+    margin-top: 2vh;
+    top: 0;
+  }
+  75% {
+    margin-top: 2vh;
+    top: 0;
+  }
+  100% {
+    top: -10vh;
+  }
+}
+@keyframes modalShow {
+  0% {
+    top: -10vh;
+  }
+  25% {
+    margin-top: 2vh;
+    top: 0;
+  }
+  75% {
+    margin-top: 2vh;
+    top: 0;
+  }
+  100% {
+    top: -10vh;
+  }
 }
 @-webkit-keyframes personal__screens {
   0% {

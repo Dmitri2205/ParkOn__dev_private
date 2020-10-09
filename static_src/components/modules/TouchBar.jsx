@@ -6,27 +6,21 @@ import Burger_menu from "../img/Burger_menu.png";
  
 
 
-export default class TouchBar extends Component{
-
-
-render(){
-     const {homeRouteButton,personalShow} = this.props;
-return(
-
+export default function TouchBar(props){
+     return(
           <div className="bottomBarWraper">
-                    <span href="#" onClick={()=>{console.log('click 2')}} >
-                    <img src={Loop}/>
-                    </span>
-                    <span onClick={ ()=>{console.log('click 1')}}> 
-                    <img src={Microphone}/>
-                    </span>
-                    <span onClick={ ()=> {homeRouteButton()}}> 
-                    <img src={home}/>
-                    </span>
-                    <span href="#" onClick={()=>{personalShow()}}> 
-                    <img src={Burger_menu}/>
-                    </span>
-                </div>
-)
-}
+               <span href="#" onClick={()=>{console.log('click 2')}} >
+               <img src={Loop} alt="loop"/>
+               </span>
+               <span onClick={ ()=>{console.log('click 1')}}> 
+               <img src={Microphone} alt="mic"/>
+               </span>
+               <span onClick={ ()=> {props.homeRouteButton()}}> 
+               <img src={home} alt="home"/>
+               </span>
+               <span href="#" onClick={()=>{props.personalShow()}}> 
+               <img src={Burger_menu} alt="menu"/>
+               </span>
+           </div>
+     )
 }

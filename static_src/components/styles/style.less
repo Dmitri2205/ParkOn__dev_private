@@ -33,11 +33,14 @@ body{
   width: 100%;
   height: 100%;
   z-index: 1;
-  background: url(/static/build/backgroundMain.png);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
   animation:mainscreen 500ms ease-in;
+  img{
+    display: block;
+    position: absolute;
+    z-index: -9999;
+    width: 100%;
+    height: 100%;
+  }
   .logo{ 
     p{
       margin:0 3px 0 0;
@@ -843,7 +846,7 @@ left: 19%;
 
 
   
- .personal {
+ .personal{
     display: block;
     position: absolute;
     top: 0;
@@ -915,8 +918,8 @@ left: 19%;
             display: inline-flex;
             width: 100%;
             flex-direction: row;
-            height: 20px;
-            line-height: 35px;
+            height: 30px;
+            line-height: 28px;
             color: white;
               p{
                 margin: 0;
@@ -941,15 +944,12 @@ left: 19%;
                   color: @maincolor;
                 }
               }
-            }
-
-            img {
-              margin-right: 26px;
-              @media screen and (min-width: 375px)  {
-                width: 30px;
-                height: 30px;
-              }
             }         
+          }
+          &_icons{
+            width: 25px;
+            height: 25px;
+            margin-right: 20px; 
           }
   .HomeAdressModal{
         width:100%;
@@ -1099,6 +1099,7 @@ margin:20px 0;
     padding-top: 74px;
     color: white;
     font-size: 16px;
+    line-height: 150%;
     font-weight: 200;
   }
   }
@@ -1132,9 +1133,10 @@ margin:20px 0;
   .placesCount{
     position: absolute;
     top: -10vh;
+    right:5%;
     z-index: 9999;
     width: 90%;
-    height: 10vh;
+    height: 8vh;
     background: linear-gradient(244deg, #2FE89A, #2B3569);
     text-align: center;
     border-radius:10px;
@@ -1316,10 +1318,29 @@ margin:20px 0;
       margin: 10px auto;
     }
 }
-
-
-
-
+@keyframes loader {
+  0%{
+    transform:rotateX(0deg);
+  }100%{
+    transform:rotateX(360deg);
+  }
+}
+@keyframes modalShow{
+  0%{
+    top: -10vh;
+  }
+  25%{
+    margin-top: 2vh;
+    top:0;
+  }
+  75%{
+    margin-top: 2vh;
+    top:0;
+  }
+  100%{
+    top: -10vh;
+  }
+}
 @keyframes personal__screens{
     0%{
       display: none;
